@@ -1,78 +1,58 @@
 'use strict';
+import getMocksArray from './mock.js'
 
-function getRandom (max) {
-    return Math.ceil(Math.random() * max)
-};
+const mocks = getMocksArray();
 
-function getRandomArrayItem (arr) {
-    return arr[getRandom(arr.length - 1)]
-};
+function createCardPopup (cardData) {
+    const cardTemplate = document.querySelector('#card').content.cloneNode(true)
+    const cardElement = cardTemplate.querySelector('article')
 
-const TITLES = ['Nagasaki Hotel', 'Arasaka Tower', 'House of a Rising Sun', 'Strange Island', 'Chocolate Palace', 'Lil Tokio Motel', 'Nobuhiko Rooms', 'Yamamoto Street'];
-const OFFER_TYPES = ['palace', 'flat', 'house', 'bungalo'];
-const TIME_VALUES = ['12:00', '13:00', '14:00'];
-const FEATURES = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
+    const cardAvatar = cardElement.querySelector('.popup__avatar')
+    const cardTitle = cardElement.querySelector('.popup__title')
+    const cardAddress = cardElement.querySelector('.popup__text--address')
+    const cardPrice = cardElement.querySelector('.popup__text--price')
+    const cardType = cardElement.querySelector('.popup__type')
+    const cardCapacity = cardElement.querySelector('.popup__text--capacity')
+    const cardTime = cardElement.querySelector('.popup__text--time')
+    const cardFeaturesList = cardElement.querySelector('.popup__features')
 
-function getMock() {
-    let mock = {
-        "author": {
-            "avatar": `img/avatars/default.png`,
-        },
-            
-        "location": {
-            "x": 1200,
-            "y": 630,
-        },
+    cardAvatar.src = cardData.author.avatar
+    cardTitle.textContent = cardData.offer.title
+    cardAddress.textContent = cardData.offer.address
+    cardPrice.textContent = cardData.offer.price
+    cardType.textContent = cardData.offer.type
+    cardCapacity.textContent = `${cardData.offer.rooms} комнат для ${cardData.offer.guests} гостей`
+    cardTime.textContent = `Заезд после ${cardData.offer.checkout}, выезд до ${cardData.offer.checkout}`
     
-        "offer": {
-            "title": 'Nagasaki Hotel',
-            "address": '1200, 630',
-            "price": 10000,
-            "type": 'palace',
-            "rooms": 3,
-            "guests": 6,
-            "checkin": '14:00',
-            "checkout": '12:00',
-            "features": [],
-            "description": 'Lorem neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit',
-        },
-    }
-
-    mock.author.avatar = 'img/avatars/user0' + getRandom(8) + '.png';
-
-    mock.location.x = getRandom(1200);
-    mock.location.y = getRandom(600);
-
-    mock.offer.title = getRandomArrayItem(TITLES);
-    mock.offer.address = `${mock.location.x}, ${mock.location.y}`;
-    mock.offer.price = getRandom(10000);
-    mock.offer.type = getRandomArrayItem(OFFER_TYPES);
-    mock.offer.rooms = getRandom(3);
-    mock.offer.guests = getRandom(6);
-    mock.offer.checkin = getRandomArrayItem(TIME_VALUES);
-    mock.offer.checkout = getRandomArrayItem(TIME_VALUES);
+    cardFeaturesList.innetHTML = ''
+    cardData.offer.features.forEach((it) => {
+        const listItem = `<li class="popup__feature ${`popup__feature` + it}"></li>`
+        cardFeaturesList.insertAdjacentHTML('beforeend', listItem)
+    });
     
-    for (let i = 0; i < FEATURES.length; i++) {
-        const currentItem = FEATURES[i]
-        if (getRandom(10) > 5) {
-            mock.offer.features.push(currentItem)
-        }
-    };
+    
+    return cardElement
+}
 
-    mock.offer.description = 'Lorem neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit';
 
-    return mock
-};
+function setPins (dataArr) {
+    const mapPinsContainer = document.querySelector('.map__pins')
+    const pinTemplate = document.querySelector('#pin')
+    const pinElement = pinTemplate.content
 
-function getMocksArray (mockCount = 8) {
-    const resultArray = []
+    dataArr.map((mock) => {
+        // console.log(mock);
+        const pin = pinElement.cloneNode(true)
+        const pinButton = pin.querySelector('button')
+        const pinIcon = pin.querySelector('img')
 
-    for (let i = 0; i < mockCount; i++) {
-        const mock = getMock()
-        resultArray.push(mock)
-    }
+        pinButton.style = `left: ${mock.location.x}px; top: ${mock.location.y}px;`
+        pinIcon.src = mock.author.avatar
 
-    return resultArray
-};
+        mapPinsContainer.insertAdjacentElement('beforeend', pinButton)
+        createCardPopup(mock)
+    })
 
-console.log(getMocksArray());
+}
+
+setPins(mocks)
