@@ -34,7 +34,7 @@ function getMock() {
 
     mock.offer.title = getRandomArrayItem(TITLES);
     mock.offer.address = `${mock.location.x}, ${mock.location.y}`;
-    mock.offer.price = getRandom(10000);
+    mock.offer.price = getRandom(2500);
     mock.offer.type = getRandomArrayItem(OFFER_TYPES);
     mock.offer.rooms = getRandom(3);
     mock.offer.guests = getRandom(6);

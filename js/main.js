@@ -4,6 +4,7 @@ import getMocksArray from './mock.js'
 const mocks = getMocksArray();
 
 function createCardPopup (cardData) {
+    const mapCardsContainer = document.querySelector('.map')
     const cardTemplate = document.querySelector('#card').content.cloneNode(true)
     const cardElement = cardTemplate.querySelector('article')
 
@@ -15,14 +16,15 @@ function createCardPopup (cardData) {
     const cardCapacity = cardElement.querySelector('.popup__text--capacity')
     const cardTime = cardElement.querySelector('.popup__text--time')
     const cardFeaturesList = cardElement.querySelector('.popup__features')
+    const cardDescription = cardElement.querySelector('.popup__description')
 
     cardAvatar.src = cardData.author.avatar
     cardTitle.textContent = cardData.offer.title
     cardAddress.textContent = cardData.offer.address
-    cardPrice.textContent = cardData.offer.price
+    cardPrice.textContent = `${cardData.offer.price} грн/ночь`
     cardType.textContent = cardData.offer.type
     cardCapacity.textContent = `${cardData.offer.rooms} комнат для ${cardData.offer.guests} гостей`
-    cardTime.textContent = `Заезд после ${cardData.offer.checkout}, выезд до ${cardData.offer.checkout}`
+    cardTime.textContent = `Заезд после ${cardData.offer.checkin}, выезд до ${cardData.offer.checkout}`
     
     cardFeaturesList.innetHTML = ''
     cardData.offer.features.forEach((it) => {
@@ -30,10 +32,12 @@ function createCardPopup (cardData) {
         cardFeaturesList.insertAdjacentHTML('beforeend', listItem)
     });
     
+    cardDescription.textContent = cardData.offer.description
+
+    mapCardsContainer.insertAdjacentElement('afterbegin', cardElement)
     
     return cardElement
 }
-
 
 function setPins (dataArr) {
     const mapPinsContainer = document.querySelector('.map__pins')
@@ -41,7 +45,6 @@ function setPins (dataArr) {
     const pinElement = pinTemplate.content
 
     dataArr.map((mock) => {
-        // console.log(mock);
         const pin = pinElement.cloneNode(true)
         const pinButton = pin.querySelector('button')
         const pinIcon = pin.querySelector('img')
