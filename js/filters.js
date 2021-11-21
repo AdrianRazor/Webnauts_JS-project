@@ -29,7 +29,7 @@ function filterData (rawData, config) {
     }
 
     return filteredData
-}
+};
 
 export default function getFilterValues (data) {
     const form = document.querySelector('.map__filters')
@@ -45,4 +45,4 @@ export default function getFilterValues (data) {
     })
 
     return filteredData
-}
+};

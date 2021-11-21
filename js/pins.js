@@ -64,10 +64,10 @@ export function setPins (dataArr) {
 
         mapPinsContainer.insertAdjacentElement('beforeend', pinButton)
     })
-}
+};
 
 export function removePins () {
     document.querySelectorAll('.map__pin').forEach(function (it) {
         it.remove()
     })
-}
+};
