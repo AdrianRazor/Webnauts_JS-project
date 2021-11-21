@@ -27,7 +27,8 @@ function getMock() {
         },
     }
 
-    mock.author.avatar = 'img/avatars/user0' + getRandom(8) + '.png';
+    const imgId = getRandom(7) + 1
+    mock.author.avatar = 'img/avatars/user0' + imgId + '.png';
 
     mock.location.x = getRandom(1200);
     mock.location.y = getRandom(600);
@@ -64,4 +65,4 @@ function getMocksArray (mockCount = 8) {
     return resultArray
 };
 
-export default getMocksArray
+export default getMocksArray;
