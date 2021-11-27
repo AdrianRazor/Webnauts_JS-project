@@ -2,6 +2,8 @@ import { getRandom } from "./utils.js";
 import { getRandomArrayItem } from "./utils.js";
 import { TITLES, OFFER_TYPES, TIME_VALUES, FEATURES } from "./const.js";
 
+let ImgIndex = 0
+
 function getMock() {
     let mock = {
         "author": {
@@ -26,19 +28,20 @@ function getMock() {
             "description": 'Lorem neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit',
         },
     }
+    
+    ImgIndex++
 
-    const imgId = getRandom(7) + 1
-    mock.author.avatar = 'img/avatars/user0' + imgId + '.png';
+    mock.author.avatar = 'img/avatars/user0' + ImgIndex  + '.png';
 
     mock.location.x = getRandom(1200);
     mock.location.y = getRandom(600);
 
     mock.offer.title = getRandomArrayItem(TITLES);
     mock.offer.address = `${mock.location.x}, ${mock.location.y}`;
-    mock.offer.price = getRandom(2500);
+    mock.offer.price = getRandom(100000);
     mock.offer.type = getRandomArrayItem(OFFER_TYPES);
-    mock.offer.rooms = getRandom(3);
-    mock.offer.guests = getRandom(6);
+    mock.offer.rooms = getRandom(3, 1);
+    mock.offer.guests = getRandom(2);
     mock.offer.checkin = getRandomArrayItem(TIME_VALUES);
     mock.offer.checkout = getRandomArrayItem(TIME_VALUES);
     

@@ -1,6 +1,7 @@
 import { ANY } from "./const.js";
 import { getNodeValue } from "./utils.js";
 import { setPins, removePins } from "./pins.js";
+import { getPriceValue } from "./utils.js";
 
 function filterData (rawData, config) {
     let filteredData = rawData;
@@ -17,7 +18,7 @@ function filterData (rawData, config) {
 
     if(config.price !== ANY) {
         filteredData = filteredData.filter(function (mock) {
-            if (mock.offer.price === config.price) {
+            if (getPriceValue(mock.offer.price) === config.price) {
                 return true
             } else {
                 return false
@@ -26,25 +27,25 @@ function filterData (rawData, config) {
         console.log(filteredData);
     }
 
-    // if(config.rooms !== ANY) {
-    //     filteredData = filteredData.filter(function (mock) {
-    //         if (mock.offer.rooms === config.rooms) {
-    //             return true
-    //         } else {
-    //             return false
-    //         }
-    //     })
-    // }
+    if(config.rooms !== ANY) {
+        filteredData = filteredData.filter(function (mock) {
+            if (String(mock.offer.rooms) === config.rooms) {
+                return true
+            } else {
+                return false
+            }
+        })
+    }
 
-    // if(config.guests !== ANY) {
-    //     filteredData = filteredData.filter(function (mock) {
-    //         if (mock.offer.guests === config.guests) {
-    //             return true
-    //         } else {
-    //             return false
-    //         }
-    //     })
-    // }
+    if(config.guests !== ANY) {
+        filteredData = filteredData.filter(function (mock) {
+            if (String(mock.offer.guests) === config.guests) {
+                return true
+            } else {
+                return false
+            }
+        })
+    }
 
     if(config.wifi) {
         filteredData = filteredData.filter(function (mock) {
@@ -118,8 +119,8 @@ export default function getFilterValues (data) {
         filteredData = filterData(data, {
             type: getNodeValue('#housingtype'),
             price: getNodeValue('#housingprice'),
-            // rooms: getNodeValue('#housing-rooms'),
-            // guests: getNodeValue('#housing-guests'),
+            rooms: getNodeValue('#housing-rooms'),
+            guests: getNodeValue('#housing-guests'),
             wifi: getNodeValue('#filter-wifi', 'checked'),
             dishwasher: getNodeValue('#filter-dishwasher', 'checked'),
             parking: getNodeValue('#filter-parking', 'checked'),

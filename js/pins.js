@@ -15,14 +15,15 @@ function createCardPopup (cardData) {
     cardAvatar.src = cardData.author.avatar
     cardTitle.textContent = cardData.offer.title
     cardAddress.textContent = cardData.offer.address
-    cardPrice.textContent = `${cardData.offer.price} грн/ночь`
+    cardPrice.textContent = `${cardData.offer.price} рублей/ночь`
     cardType.textContent = cardData.offer.type
     cardCapacity.textContent = `${cardData.offer.rooms} комнат для ${cardData.offer.guests} гостей`
     cardTime.textContent = `Заезд после ${cardData.offer.checkin}, выезд до ${cardData.offer.checkout}`
     
-    cardFeaturesList.innetHTML = ''
+
+    cardFeaturesList.innerHTML = ''
     cardData.offer.features.forEach((it) => {
-        const listItem = `<li class="popup__feature ${`popup__feature` + it}"></li>`
+        const listItem = `<li class="popup__feature ${`popup__feature--` + it}"></li>`
         cardFeaturesList.insertAdjacentHTML('beforeend', listItem)
     });
     
