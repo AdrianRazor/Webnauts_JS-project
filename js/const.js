@@ -3,3 +3,4 @@ export const OFFER_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 export const TIME_VALUES = ['12:00', '13:00', '14:00'];
 export const FEATURES = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
 export const ANY = 'any';
+export const URL = 'http://www.academy-booking-api.staj.fun/';
